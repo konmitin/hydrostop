@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Unit;
+use Illuminate\Http\Request;
+
+class UnitController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $units = Unit::get();
+
+        return response([
+            'data' => $units,
+            'count' => Unit::count()
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Unit $unit)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Unit $unit)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Unit $unit)
+    {
+        //
+    }
+}
