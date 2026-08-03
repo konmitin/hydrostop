@@ -2,11 +2,11 @@
     itemscope itemtype="https://schema.org/Product">
 
     <a href="/catalog/{{ $product->category()->first()->slug . '/' . $product->slug }}"
-        class="bg-gradient-to-br from-blue-50 to-gray-100 flex justify-center items-center h-56 md:h-64 relative overflow-hidden"
+        class="bg-gradient-to-br from-blue-50 to-gray-100 flex justify-center items-center h-56 md:h-72 relative overflow-hidden"
         title="{{ $product->name }}">
         @if (isset($product->frontImage[0]))
             <img src="{{ '/storage/' . $product->frontImage[0]->path }}"
-                alt="{{ $product->frontImage[0]->pivot->name }} купить в наличии" class="image-hover h-full object-cover"
+                alt="{{ $product->frontImage[0]->pivot->name }} купить в наличии" class="image-hover w-full h-full object-contain"
                 loading="lazy" itemprop="image">
         @endif
 
@@ -33,27 +33,16 @@
             <p class="text-gray-600 text-sm md:text-base mb-4 md:mb-6" itemprop="description">
                 {{ mb_substr($product->description, 0, 80) }}...
             </p>
-
-            <div class="space-y-3 mb-5 md:mb-7">
-                {{-- {% for attribute in attributes %}
-                <div class="flex justify-between items-center border-b border-gray-100 pb-2">
-                    <div class="flex items-center text-gray-600">
-                        <span class="text-sm md:text-base">{{ attribute . name }}:</span>
-                    </div>
-                    <span class="font-semibold text-gray-800 text-sm md:text-base">{{ attribute . text }}</span>
-                </div>
-                {% endfor %} --}}
-            </div>
         </div>
 
-        <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4" itemprop="offers" itemscope
+        <div class="flex flex-col md:justify-between gap-4" itemprop="offers" itemscope
             itemtype="https://schema.org/Offer">
 
             <div class="flex text-2xl md:text-3xl items-baseline font-bold text-blue-500">
-                <span class="" itemprop="price" content="{{ $product->price }}">
-                    от {{ $product->price }}
-                </span>
-                <span class="ml-1" itemprop="priceCurrency" content="RUB">₽</span>
+                <span class="text-nowrap" itemprop="price" content="{{ $product->price }}">
+                    от {{ $product->price }} ₽ / {{ $product->unit()->first()->name ?? '' }}
+                </span> 
+                <span class="hidden" itemprop="priceCurrency" content="RUB">₽</span>
             </div>
 
             <a href="/catalog/{{ $product->category()->first()->slug . '/' . $product->slug }}"

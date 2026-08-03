@@ -15,12 +15,14 @@ class Template extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
+    public function __construct(
+        public mixed $title,
+        public mixed $description,
+    ) {
         $branchId = session('branch_id') ?? 1;
         $this->branch = Branch::find($branchId);
 
-        $this->yandexMetrika = env('YANDEX_METRIKA');
+        $this->yandexMetrika = env('YANDEX_METRIKA', '');
     }
 
     /**
@@ -28,6 +30,6 @@ class Template extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header');
+        return view('components.template');
     }
 }

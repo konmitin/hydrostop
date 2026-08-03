@@ -1,38 +1,27 @@
 <template>
   <div>
     <label class="block text-xs text-gray-600 mb-1 uppercase font-medium">
-      {{ this.label || this.title}}
+      {{ this.label || this.title }}
     </label>
-    <VueSelect
-      class="select cursor-pointer"
-      v-model="this.value"
-      @optionCreated="
-        (value) => {
-          $emit('update:modelValue', this.value);
-          $emit('optionCreated', value);
-          $emit('optionSelected', value);
-        }
-      "
-      @optionSelected="
+    <VueSelect class="select cursor-pointer" v-model="this.value" @optionCreated="
+      (value) => {
+        $emit('update:modelValue', this.value);
+        $emit('optionCreated', value);
+        $emit('optionSelected', value);
+      }
+    " @optionSelected="
         (value) => {
           $emit('update:modelValue', this.value);
           $emit('optionSelected', value);
         }
-      "
-      @optionDeselected="
+      " @optionDeselected="
         (value) => {
           $emit('update:modelValue', this.value);
           $emit('optionDeselected', value);
         }
-      "
-      :is-multi="this.isMulti"
-      :is-taggable="this.isTaggable"
-      :options="this.options"
-      :get-option-label="this.getOptionLabel"
-      :get-option-value="this.getOptionValue"
-      :required="this.isRequired"
-      :placeholder="this.placeholder"
-    />
+      " :is-multi="this.isMulti" :is-taggable="this.isTaggable" :options="this.options"
+      :get-option-label="this.getOptionLabel" :get-option-value="this.getOptionValue" :required="this.isRequired"
+      :placeholder="this.placeholder" />
   </div>
 </template>
 <script>

@@ -9,7 +9,7 @@
                         @if (isset($product->frontImage[0]))
                             <img src="{{ '/storage/' . $product->frontImage[0]->path }}"
                                 alt="{{ $product->frontImage[0]->pivot->name }}"
-                                class="w-full h-full object-cover rounded-lg" data-product-image="product-front">
+                                class="w-full h-full object-contain rounded-lg" data-product-image="product-front">
                         @endif
                     </div>
 
@@ -19,14 +19,14 @@
                             @if (isset($product->frontImage[0]))
                                 <img src="{{ '/storage/' . $product->frontImage[0]->path }}"
                                     alt="{{ $product->frontImage[0]->pivot->name }}"
-                                    class="rounded-md h-30 w-30 md:w-48 object-cover cursor-pointer border-1 border-blue-500"
+                                    class="rounded-md h-30 w-30 md:w-48 object-contain cursor-pointer border-1 border-blue-500"
                                     data-product-image="product-image">
                             @endif
 
 
                             @foreach ($product->images as $image)
                                 <img src="{{ '/storage/' . $image->path }}" alt="{{ $image->pivot->name }}"
-                                    class="rounded-md h-30 w-30 md:w-48 object-cover cursor-pointer border-1"
+                                    class="rounded-md h-30 w-30 md:w-48 object-contain cursor-pointer border-1"
                                     data-product-image="product-image">
                             @endforeach
                         </div>
@@ -101,7 +101,7 @@
                         </div>
                     @endif
 
-                    <div class="flex gap-4">
+                    {{-- <div class="flex gap-4">
                         <div class="flex items-center border rounded-md">
                             <button class="cursor-pointer px-4 py-2 text-gray-600 hover:text-blue-600"
                                 id="decrease-quantity">-</button>
@@ -120,7 +120,7 @@
                             class="cursor-pointer bg-white border border-blue-600 text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors font-medium">
                             <i class="far fa-heart"></i>
                         </button>
-                    </div>
+                    </div> --}}
 
                     <div class="mt-4 flex items-center text-sm text-gray-600">
                         <i class="fas fa-truck mr-2"></i>

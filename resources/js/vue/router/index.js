@@ -21,6 +21,7 @@ import Client from '../pages/Client.vue';
 import Calls from '../pages/Calls.vue';
 import Sertificates from '../pages/Sertificates.vue';
 import Sertificate from '../pages/Sertificate.vue';
+import Call from '../pages/Call.vue';
 
 const routes = [
     // {
@@ -39,6 +40,10 @@ const routes = [
     {
         path: "/h-admin/orders",
         component: Orders
+    },
+    {
+        path: "/h-admin/calls/:id",
+        component: Call
     },
     {
         path: "/h-admin/calls",
