@@ -22,7 +22,7 @@ class Template extends Component
         $branchId = session('branch_id') ?? 1;
         $this->branch = Branch::find($branchId);
 
-        $this->yandexMetrika = env('YANDEX_METRIKA', '');
+        $this->yandexMetrika = env('YANDEX_METRIKA', 'empty');
     }
 
     /**

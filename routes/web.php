@@ -113,7 +113,7 @@ Route::get('/catalog/{category}/{product}', function (Request $request, string $
 
     $otherProducts = Product::whereHas('category', function (Builder $query) use ($categorySlug) {
         $query->where('slug', $categorySlug);
-    })->get();
+    })->whereNot('id', $product->id)->get();
 
     return view(
         'product',

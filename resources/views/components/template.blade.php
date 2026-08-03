@@ -47,7 +47,7 @@
 
         <x-footer class="mt-auto"></x-footer>
     </div>
-    
+
     <x-notification-modal></x-notification-modal>
 
     <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 z-50 animate-slide-up">
@@ -91,7 +91,7 @@
     </div>
 
     <script>
-        const YANDEX_METRIKA_ID = {{ $yandexMetrika ?? 0 }};
+        const YANDEX_METRIKA_ID = `{{ $yandexMetrika ?? '' }}`;
 
         // Проверяем, было ли уже принято решение
         function checkConsent() {

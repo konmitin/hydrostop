@@ -174,28 +174,30 @@
             </div> --}}
 
 
-        <div class="bg-white rounded-lg">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Похожие товары</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($otherProducts as $product)
-                    <div class="border rounded-lg p-4 product-card">
-                        <h3 class="font-semibold text-gray-800 mb-2">{{ $product->name }}</h3>
-                        <p class="text-gray-600 text-sm mb-3">{{ mb_substr($product->description, 0, 80) }}...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-lg font-bold text-blue-600">{{ $product->price }} ₽ /
-                                {{ $product->unit->name ?? '' }}</span>
-                            <button
-                                class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition-colors text-sm view-product"
-                                data-product="7">
-                                Подробнее
-                            </button>
+        @if (isset($otherProducts) && $otherProducts->count() > 0)
+            <div class="bg-white rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Похожие товары</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($otherProducts as $product)
+                        <div class="border rounded-lg p-4 product-card">
+                            <h3 class="font-semibold text-gray-800 mb-2">{{ $product->name }}</h3>
+                            <p class="text-gray-600 text-sm mb-3">{{ mb_substr($product->description, 0, 80) }}...</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-blue-600">{{ $product->price }} ₽ /
+                                    {{ $product->unit->name ?? '' }}</span>
+                                <a href="/catalog/{{ $product->category()->first()->slug . '/' . $product->slug }}"
+                                    class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition-colors text-sm view-product">
+                                    Подробнее
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
 
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 
     <script>
