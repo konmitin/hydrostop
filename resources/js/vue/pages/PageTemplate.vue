@@ -46,8 +46,8 @@
                 <div v-if="field.editable != false">
                   <InputTextPage v-if="field.type == 'text' || field.type == 'email'"
                     :modelValue="this.getNestedValue(field.key.data)"
-                    @update:modelValue="(val) => setNestedValue(field.key.data, val)" :name="field.key"
-                    :title="field.title" />
+                    @update:modelValue="(val) => { setNestedValue(field.key.data, val); this.inputText(field, val, section.fields) }"
+                    :name="field.key" :title="field.title" />
 
                   <InputPhonePage v-if="field.type == 'phone'" :modelValue="this.getNestedValue(field.key.data)"
                     @update:modelValue="(val) => setNestedValue(field.key.data, val)" :name="field.key"
@@ -137,6 +137,7 @@ import { ref } from "vue";
 import TextareaPage from "../components/fields/TextareaPage.vue";
 import PropertyRow from "../components/modal/PropertyRow.vue";
 import { imageToBase64 } from "../composables/imageToBase64.js";
+import { url_slug } from "../composables/slug.js";
 
 export default {
   components: {
@@ -241,7 +242,9 @@ export default {
         }
         return current[key]
       }, this.object)
-      target[lastKey] = value
+      target[lastKey] = value;
+
+
     },
     async addFileEvent(event, path) {
       let downloadFile = event.target.files[0];
@@ -275,7 +278,23 @@ export default {
       formattingFile.base64 = base64;
 
       return formattingFile;
-    }
+    },
+    inputText(field, value, fields) {
+      let fieldSlug;
+
+      console.log(fields);
+
+      if (field.key.data == 'name') {
+
+        fieldSlug = fields.find((p) => p.name == 'slug' || p.name == 'code');
+
+        this.object['slug'] = url_slug(value);
+        this.object['code'] = url_slug(value);
+        this.$forceUpdate();
+      }
+
+      return field;
+    },
   },
   watch: {
   },

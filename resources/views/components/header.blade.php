@@ -5,12 +5,13 @@
                 <img src="/storage/img/logo_icon_dark.png" title="Логотип Гидростоп" alt="Логотип Гидростоп"
                     class="mr-3 max-h-12" />
 
-                <h1 class="text-xl font-bold text-gray-800">Завод Гидростоп</h1>
+                <h1 class="text-xl font-bold text-blue-600">Завод Гидростоп</h1>
             </a>
 
             <div class="hidden md:flex space-x-6 text-md">
                 <a href="/catalog" class="text-gray-600 hover:text-blue-600 font-medium">Продукция</a>
                 <a href="/about" class="text-gray-600 hover:text-blue-600 font-medium">О компании</a>
+                <a href="/about#documents" class="text-gray-600 hover:text-blue-600 font-medium">Документы</a>
                 <a href="/contacts" class="text-gray-600 hover:text-blue-600 font-medium">Контакты</a>
             </div>
 

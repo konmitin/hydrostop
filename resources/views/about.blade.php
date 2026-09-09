@@ -205,8 +205,8 @@
         </div>
     </section>
 
-    <!-- Сертификаты и достижения -->
-    <section class="py-8">
+    <!-- Сертификаты и документы -->
+    <section id="documents" class="py-8">
         <div class="container mx-auto px-4">
             <!-- Заголовок -->
             <h2 class="text-3xl font-bold section-title mb-12">Сертификаты и документы</h2>
