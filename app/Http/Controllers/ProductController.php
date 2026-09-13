@@ -47,7 +47,7 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->fill($request->all());
-        
+
         $product->price = preg_replace("/[^\d.]/", "", $request->price);
 
         if (empty($product->slug)) {
@@ -205,7 +205,7 @@ class ProductController extends Controller
                 if (isset($image['deleted']) && $image['deleted'] == 'Y') {
                     $file = File::find($image['file_id']);
 
-                    $product->images()->detach($file->id);
+                    $product->documents()->detach($file->id);
                     Storage::disk('public')->delete($file->path);
                     $file->delete();
 
@@ -280,8 +280,50 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $productPath = "/products/" . $product->id . "/";
+        $frontImage = $product->frontImage()->first();
+
+        if ($frontImage) {
+            $product->frontImage()->detach();
+
+            $file = File::find($frontImage->file_id);
+            $file->delete();
+        }
+
+        $imagesIds = $product->images()->get()->modelKeys();
+
+        if (count($imagesIds) > 0) {
+            $product->images()->detach();
+
+            $files = File::find($imagesIds);
+
+            foreach ($files as $key => $file) {
+
+                Storage::disk('public')->delete($file->path);
+                $file->delete();
+            }
+        }
+
+        $docIds = $product->documents()->get()->modelKeys();
+
+        if (count($docIds) > 0) {
+            $product->documents()->detach();
+
+            $files = File::find($docIds);
+
+            foreach ($files as $key => $file) {
+
+                Storage::disk('public')->delete($file->path);
+                $file->delete();
+            }
+        }
+
+        $product->delete();
+
+        return response([
+            'message' => 'Товар успешно удален',
+        ]);
     }
 }

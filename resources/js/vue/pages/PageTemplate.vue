@@ -286,11 +286,9 @@ export default {
 
       if (field.key.data == 'name') {
 
-        fieldSlug = fields.find((p) => p.name == 'slug' || p.name == 'code');
-
-        this.object['slug'] = url_slug(value);
-        this.object['code'] = url_slug(value);
-        this.$forceUpdate();
+        // this.object['slug'] = url_slug(value);
+        // this.object['code'] = url_slug(value);
+        // this.$forceUpdate();
       }
 
       return field;

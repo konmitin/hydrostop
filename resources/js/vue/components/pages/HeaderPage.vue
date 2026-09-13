@@ -23,8 +23,8 @@
       <div class="flex gap-2">
         <slot name="buttons"></slot>
 
-        <HeaderEditSave :is-edit="this.isEdit" @save="$emit('save')" @edit="$emit('edit')" v-if="this.isEditable"/>
-        <HeaderDelete @delete="$emit('delete')" v-if="this.isDeletable"/>
+        <HeaderEditSave :is-edit="this.isEdit" @save="$emit('save')" @edit="$emit('edit')" v-if="this.isEditable" />
+        <HeaderDelete :disabled="isRequestDelete" @delete="$emit('delete')" v-if="this.isDeletable" />
       </div>
     </div>
   </div>
@@ -54,6 +54,10 @@ export default {
       default: false,
     },
     isDeletable: {
+      type: Boolean,
+      default: false,
+    },
+    isRequestDelete: {
       type: Boolean,
       default: false,
     },

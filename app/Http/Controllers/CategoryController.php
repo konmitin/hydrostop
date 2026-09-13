@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -83,11 +84,10 @@ class CategoryController extends Controller
             ], 422);
         }
 
-        $category = new Category;
         $category->name = $request->name;
         $category->slug = $request->slug ?? Str::slug($request->name);
 
-        $categorySlug = Category::where('slug', $category->slug)->get();
+        $categorySlug = Category::where('slug', $category->slug)->whereNot('id', $category->id)->get();
 
         if ($categorySlug->count() >= 1) {
             return response([
@@ -109,6 +109,18 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+
+        $products = $category->products();
+
+        if ($products->count() >= 1) {
+            return response([
+                'message' => "Ошибка удаления. К категории привязаны товары, сначала удалите или отвяжите товары",
+            ], 422);
+        }
+        $category->delete();
+
+        return response([
+            'message' => "Категория удалена успешна",
+        ]);
     }
 }

@@ -4,7 +4,7 @@
     <HeaderPage @edit="
       this.isEdit = true;
     this.getOptions();
-    " @save="this.save()" @delete="this.delete()" :isEdit="this.isEdit" :isDeletable="true"
+    " @save="this.save()" @delete="this.delete()" :isEdit="this.isEdit" :isRequestDelete="isRequestDelete" :isDeletable="true"
       :title="this.product.name ?? ''">
       <template #avatar>
         <div class="w-12 h-12 bg-gray-900 rounded-md flex items-center justify-center">
@@ -179,41 +179,48 @@
           </template>
           <template #view>
             <div class="flex flex-col gap-2" v-if="this.product.documents">
-              <div class="flex items-center h-12" v-for="(document, index) in this.product.documents" :key="index">
-                <div v-if="!document.rename"
-                  class="font-medium flex items-center w-full max-w-96 truncate text-gray-700 h-full text-white px-4 py-2 bg-blue-600 rounded-l-md">
-                  {{ document.name }}
+
+              <template v-for="(document, index) in this.product.documents" :key="index">
+
+
+                <div class="flex items-center h-12" v-if="document.deleted != 'Y'">
+                  <div v -if=" !document.rename"
+                    class="font-medium flex items-center w-full max-w-96 truncate text-gray-700 h-full text-white px-4 py-2 bg-blue-600 rounded-l-md">
+                    {{ document.name }}
+                  </div>
+
+                  <div v-if="document.rename"
+                    class="font-medium w-full max-w-96 truncate text-gray-700 h-full text-white bg-blue-600 rounded-l-md">
+                    <InputTextPage v-model="document.name" class="h-full" />
+                  </div>
+
+                  <div class="flex items-center gap-3 h-full bg-gray-600 px-3 py-2 rounded-r-md">
+                    <button v-if="!document.rename" @click="document.rename = true;"
+                      class="cursor-pointer flex items-center justify-center text-white hover:text-blue-600 transition">
+                      <i class="fas fa-pen"></i>
+                    </button>
+
+                    <button v-if="document.rename" @click="document.rename = false; this.isEdit = true;"
+                      class="cursor-pointer flex items-center justify-center text-white hover:text-blue-600 transition">
+                      <i class="fas fa-save"></i>
+                    </button>
+
+                    <a :href="document.path"
+                      class="cursor-pointer flex items-center justify-center text-white hover:text-green-500 transition"
+                      :download="document.name">
+                      <i class="fas fa-download text-lg"></i>
+                    </a>
+
+                    <button @click="this.deleteMedia(index, 'document')"
+                      class="cursor-pointer flex items-center justify-center text-white hover:text-red-600 transition">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
                 </div>
+              </template>
 
-                <div v-if="document.rename"
-                  class="font-medium w-full max-w-96 truncate text-gray-700 h-full text-white bg-blue-600 rounded-l-md">
-                  <InputTextPage v-model="document.name" class="h-full" />
-                </div>
-
-                <div class="flex items-center gap-3 h-full bg-gray-600 px-3 py-2 rounded-r-md">
-                  <button v-if="!document.rename" @click="document.rename = true;"
-                    class="cursor-pointer flex items-center justify-center text-white hover:text-blue-600 transition">
-                    <i class="fas fa-pen"></i>
-                  </button>
-
-                  <button v-if="document.rename" @click="document.rename = false; this.isEdit = true;"
-                    class="cursor-pointer flex items-center justify-center text-white hover:text-blue-600 transition">
-                    <i class="fas fa-save"></i>
-                  </button>
-
-                  <a :href="document.path"
-                    class="cursor-pointer flex items-center justify-center text-white hover:text-green-500 transition"
-                    :download="document.name">
-                    <i class="fas fa-download text-lg"></i>
-                  </a>
-
-                  <button @click="this.deleteMedia(index, 'document')"
-                    class="cursor-pointer flex items-center justify-center text-white hover:text-red-600 transition">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </div>
             </div>
+
 
             <div v-if="this.product.documents.length <= 0">
               <div class="flex items-center justify-between text-gray-600">
@@ -303,6 +310,7 @@ export default {
       isShowModal: false,
       isEdit: false,
       showHiddenTest: false,
+      isRequestDelete: false,
       product: {},
       units: [],
       categories: [],
@@ -436,14 +444,19 @@ export default {
         .catch((res) => { });
     },
     async delete() {
+
+      this.isRequestDelete = true;
+
       await axios
         .delete(`/api/products/${this.product.id}`)
         .then((res) => {
           this.isEdit = false;
+          this.isRequestDelete = false;
+
           this.$router.push("/h-admin/products");
         })
         .catch((res) => {
-          console.log(res);
+          this.isRequestDelete = false;
         });
     },
     doEditProperty(property, propertyIndex) {
@@ -636,7 +649,7 @@ export default {
     },
     inputName(value) {
 
-      this.product.slug = url_slug(value);
+      // this.product.slug = url_slug(value);
     },
   },
   watch: {

@@ -1,7 +1,7 @@
 <template lang="">
     <div>
         <PageTemplate :tabs="this.tabs" title='Категория' apiName="categories" 
-        :sections="this.sections" />
+        :sections="this.sections" :isDeletable="true" mainPage="/categories"/>
     </div>
 </template>
 <script>
