@@ -168,7 +168,7 @@
                 </div>
 
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden info-card">
-                    <img src="https://via.placeholder.com/600x400/3B82F6/FFFFFF?text=Наше+производство"
+                    <img src="/storage/img/company-about.jpg"
                         alt="Наше производство" class="w-full h-64 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-3">Современное производство</h3>
