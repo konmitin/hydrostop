@@ -28,7 +28,7 @@ Route::apiResource('/public/sertificates', CallController::class);
 
 Route::get('/', function (Request $request) {
 
-    $products = Product::limit(8)->get();
+    $products = Product::limit(8)->ordered()->get();
 
     return view('index', [
         'about' => '',
@@ -56,9 +56,13 @@ Route::get('/catalog/{category?}', function (Request $request, ?string $category
 
     $products = new Product;
 
+
     if (isset($sort)) {
         $products = $products->orderBy($sort, $order ?? 'asc');
+    } else {
+        $products = $products->ordered();
     }
+
 
     if (isset($category)) {
         $products = $products->whereHas('category', function (Builder $query) use ($categorySlug) {
@@ -113,7 +117,7 @@ Route::get('/catalog/{category}/{product}', function (Request $request, string $
 
     $otherProducts = Product::whereHas('category', function (Builder $query) use ($categorySlug) {
         $query->where('slug', $categorySlug);
-    })->whereNot('id', $product->id)->get();
+    })->whereNot('id', $product->id)->limit(4)->ordered()->get();
 
     return view(
         'product',

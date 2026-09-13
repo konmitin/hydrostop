@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ProductFilter;
 use App\Http\Resources\ProductResource;
 use App\Models\File;
 use App\Models\Product;
@@ -19,9 +20,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, ProductFilter $filter)
     {
-        $paginate = Product::paginate(20);
+        $products = Product::filter($filter);
+        $paginate = $products->paginate(20);
 
         return response([
             'data' => ProductResource::collection($paginate),

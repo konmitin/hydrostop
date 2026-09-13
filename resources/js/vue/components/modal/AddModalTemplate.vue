@@ -52,12 +52,12 @@
 
           <div class="mt-8 w-full flex justify-end space-x-4">
             <div class="flex items-center gap-4">
-              <button-secondary type="button" title="Cancel" @click="this.resetForm()"
+              <button-secondary type="button" title="Отменить" @click="this.resetForm()"
                 class="hover:bg-transparent hover:text-gray-800">
               </button-secondary>
               <button-primary :class="{
                 'bg-gray-500': !this.isEdit,
-              }" :disabled="!this.isEdit" title="Add" icon="fa-plus">
+              }" :disabled="!this.isEdit" title="Добавить" icon="fa-plus">
               </button-primary>
             </div>
           </div>

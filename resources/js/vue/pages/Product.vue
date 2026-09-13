@@ -35,6 +35,7 @@
         <SectionPage cols="2" :isEdit="this.isEdit" title="Основное">
           <template #view>
             <FieldPage title="Название"> {{ this.product.name }} </FieldPage>
+            <FieldPage title="Позиция (число)"> {{ this.product.position }} </FieldPage>
             <FieldPage title="Цена"> {{ this.product.price }} ₽ </FieldPage>
             <FieldPage title="Единица измерения">
               {{ this.product.unit?.name }}
@@ -64,6 +65,7 @@
           <template #edit>
             <InputTextPage @update:modelValue="(value) => inputName(value)" v-model="this.product.name" name="name"
               title="Название" />
+            <InputNumberPage v-model="this.product.position" title="Позиция" />
             <InputNumberPage v-model="this.product.price" title="Цена" />
 
             <SelectPage title="Единица измерения" v-model="this.product.unit.id" :options="this.units" />
@@ -72,7 +74,7 @@
 
             <SelectPage title="Статус" v-model="this.product.status.id" :options="this.statuses" />
 
-            <InputTextPage v-model="this.product.slug" name="slug" title="Код" />
+            <InputTextPage @input="inputSlug($event.target.value)" v-model="this.product.slug" name="slug" title="Код" />
             <InputTextPage v-model="this.product.sku" name="sku" title="Артикул" />
             <InputTextPage v-model="this.product.count" name="count" title="Кол-во" />
 
@@ -646,6 +648,10 @@ export default {
 
 
       this.isEdit = true;
+    },
+
+    inputSlug(value) {
+      this.product.slug = url_slug(value);
     },
     inputName(value) {
 

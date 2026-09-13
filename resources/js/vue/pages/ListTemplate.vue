@@ -9,7 +9,7 @@
 
     <MainPage>
       <HeaderFilters :title="this.listTitle" :filters="this.filters" :active="this.activeFilters"
-        @filter="this.filter(filters)" @cancel="this.filter(filters)"></HeaderFilters>
+        @filter="this.filter(filters)" @cancel="this.filter(filters)" @openFilter="$emit('showFilter')" />
 
       <TablePrimary class="" :properties="this.properties" :showObjects="this.objects?.length"
         :countObjects="this.count" :currentPage="this.page" @page="
@@ -47,7 +47,7 @@ export default {
   components: {
     AddModalTemplate,
   },
-  emits: ["showAddModal"],
+  emits: ["showAddModal", 'showFilter'],
   props: {
     apiName: {
       type: String,
@@ -184,16 +184,23 @@ export default {
       this.activeFilters = {};
       this.page = 1;
 
-      for (const filterName in filters) {
-        const filter = filters[filterName];
+      for (const filterKey in filters) {
+        const filter = filters[filterKey];
 
-        if (filter.model.length > 0) {
-          this.filters[filterName].model = filter.model;
-          this.activeFilters[filterName] = filter.model;
+        if ((filter.type == 'text' || filter.type == 'select-multi') && filter.model.length <= 0) {
+          continue;
         }
+
+
+        if ((filter.type == 'number' || filter.type == 'select') && filter.model <= 0) {
+          continue;
+        }
+
+        this.filters[filterKey].model = filter.model;
+        this.activeFilters[filter.name] = filter.model;
       }
 
-      await this.getObjects();
+      // await this.getObjects();
     },
     showAddModal() {
       this.isShowAddModal = true;

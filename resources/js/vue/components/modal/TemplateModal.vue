@@ -4,7 +4,7 @@
       <div class="p-2 md:p-6 border-b border-gray-100">
         <div class="flex justify-between items-center">
           <h3 class="text-2xl font-bold text-gray-900">
-            {{ this.title ?? (this.mode == "add" ? "Add" : "Edit") }}
+            {{ this.title ?? (this.mode == "add" ? "Новый" : "Редактирование") }}
           </h3>
           <button @click="$emit('close')"
             class="w-10 h-10 cursor-pointer rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-600">
@@ -35,18 +35,18 @@
                 this.mode == 'edit' &&
                 this.deleteType == 'disabled' &&
                 this.modelValue.deleted
-              " type="button" title="Recover" icon="fa-undo" class="bg-green-600 hover:bg-green-700"
+              " type="button" title="Восстановить" icon="fa-undo" class="bg-green-600 hover:bg-green-700"
                 @click="$emit('recover')">
               </button-primary>
             </div>
 
             <div class="flex items-center gap-4">
-              <button-secondary v-if="this.mode == 'add' || this.isCancel" type="button" title="Cancel"
+              <button-secondary v-if="this.mode == 'add' || this.isCancel" type="button" title="Отменить"
                 @click="this.resetForm()" class="hover:bg-transparent hover:text-gray-800">
               </button-secondary>
               <button-primary :class="{
                 'bg-gray-500': !this.isEdit,
-              }" :disabled="!this.isEdit" :title="this.mode == 'add' ? 'Add' : 'Save'"
+              }" :disabled="!this.isEdit" :title="this.mode == 'add' ? 'Добавить' : 'Сохранить'"
                 :icon="this.mode == 'add' ? 'fa-plus' : 'fa-save'">
               </button-primary>
             </div>
@@ -77,7 +77,7 @@ export default {
     },
     titleDelete: {
       type: String,
-      default: "Delete",
+      default: "Удалить",
     },
     deleteType: {
       type: String,

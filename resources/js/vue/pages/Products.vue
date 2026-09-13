@@ -2,6 +2,7 @@
   <div>
     <ListTemplate apiName="products" pageTitle="Товары" listTitle="Список товаров" :properties="[
       { name: 'Название', code: 'name' },
+      { name: 'Позиция', code: 'position' },
       { name: 'Описание', code: 'description' },
       { name: 'Артикул', code: 'sku' },
       { name: 'Цена', code: 'price', type: 'price' },
@@ -12,6 +13,13 @@
         type: 'text',
         model: '',
         required: true,
+      },
+      {
+        name: 'position',
+        title: 'Позиция',
+        type: 'number',
+        model: 100,
+        required: false,
       },
       {
         name: 'slug',
@@ -45,16 +53,26 @@
       },
     ]" :filters="[
       {
+        name: 'id',
         title: 'ID',
         type: 'text',
         model: '',
       },
       {
+        name: 'name',
         title: 'Название',
         type: 'text',
         model: '',
       },
-    ]" @showAddModal="this.getCategories(); this.getStatuses();" />
+      {
+        name: 'category',
+        title: 'Категория',
+        type: 'select-multi',
+        model: [],
+        values: this.categories
+      },
+
+    ]" @showFilter="this.getCategories(); this.getStatuses();" @showAddModal="this.getCategories(); this.getStatuses();" />
   </div>
 </template>
 <script>
